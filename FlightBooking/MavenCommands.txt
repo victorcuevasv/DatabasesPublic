@@ -1,0 +1,8 @@
+Compile: 
+
+mvn clean install
+
+Run client application:
+
+mvn exec:java -Dexec.mainClass=org.mydb.projects.flightbooking.FlightService
+
