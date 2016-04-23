@@ -6,3 +6,8 @@ Run client application:
 
 mvn exec:java -Dexec.mainClass=org.mydb.projects.flightbooking.FlightService
 
+
+Example search command:
+
+search "Seattle WA" "Boston MA" 1 14 10
+

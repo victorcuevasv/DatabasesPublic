@@ -39,13 +39,13 @@ public class Query {
 	// TODO: Add more queries here
 
 	// transactions
-	private static final String BEGIN_TRANSACTION_SQL = "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE; BEGIN TRANSACTION;";
+	private static final String BEGIN_TRANSACTION_SQL = "BEGIN ISOLATION LEVEL SERIALIZABLE;";
 	private PreparedStatement beginTransactionStatement;
 
-	private static final String COMMIT_SQL = "COMMIT TRANSACTION";
+	private static final String COMMIT_SQL = "COMMIT;";
 	private PreparedStatement commitTransactionStatement;
 
-	private static final String ROLLBACK_SQL = "ROLLBACK TRANSACTION";
+	private static final String ROLLBACK_SQL = "ROLLBACK;";
 	private PreparedStatement rollbackTransactionStatement;
 
 	public Query(String configFilename) {
