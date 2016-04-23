@@ -1,0 +1,51 @@
+Maven installation:
+
+Create the M2_HOME environment variable:
+
+C:\Program Files\ASF\apache-maven-3.3.9
+
+Create the JAVA_HOME variable:
+
+C:\Program Files\Java\jdk1.8.0_72
+
+Add the bin directory of Maven to the Path environment variable
+
+C:\Program Files\ASF\apache-maven-3.3.9\bin
+
+
+
+Create the project with Maven
+
+C:\Users\3371823\workspace> mvn archetype:generate -DgroupId=org.mydb.projects.flightbooking -DartifactId=FlightBooking -DinteractiveMode=false
+
+Load the eclipse project from the maven project (must be inside the project folder where the pom.xml file is located)
+
+C:\Users\3371823\workspace\FlightBooking> mvn eclipse:eclipse
+
+Compile the project
+
+C:\Users\3371823\workspace\FlightBooking> mvn clean install
+
+Run the client progam
+
+C:\Users\3371823\workspace\FlightBooking> mvn exec:java -Dexec.mainClass=org.mydb.projects.flightbooking.FlightService  -Dexec.args=""
+
+
+Change the following parameter in the file C:\Program Files\PostgreSQL\9.5\data\pg_hba.conf
+
+
+from
+
+
+# IPv4 local connections:
+# TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD
+host    all         all         127.0.0.1/32         md5
+
+
+into
+
+
+# IPv4 local connections:
+# TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD
+host    all         all         127.0.0.1/32         trust
+
