@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>View Table</title>
+<style>
+	.yui3-skin-sam .yui3-layout-vertical > .yui3-layout-content {
+		border:2px solid black;
+		padding:1px;
+	}
+
+	.yui3-skin-sam .yui3-layoutchild {
+		opacity:0.8;
+		border:1px solid black;
+	}
+</style>
+<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+<script>
+function callTableResourceWS(Y) {
+	var url = 'webapi/tableresource';
+	var tablenameTextField = Y.one('#tablenameTextField');
+	var tablenameParam = tablenameTextField.get('value');
+	var limitTextField = Y.one('#limitTextField');
+	var limitParam = limitTextField.get('value');
+	Y.io(url, {
+		data: 'tablename=' + tablenameParam + '&limit=' + limitParam,
+		on: {
+			complete: function (id, response) {
+				if (response.status >= 200 && response.status < 300) {
+					var jsonArray = Y.JSON.parse(response.responseText);
+					
+					var results_window = window.open("", "results_window", "menubar=1,resizable=1,width=500,height=600,scrollbars=1");
+					results_window.document['writeln']('<head><link charset="utf-8" href="css/combo.css" rel="stylesheet" type="text/css">'
+					                                 + '</head><body class="yui3-skin-sam"><h3>Results</h3>'
+					                                 + '<div id="table_content"></div></body>');
+					var cols = [];
+				    var data = [];
+					var col=0;
+					for (var propertyName in jsonArray[0]) {
+						cols[col] = propertyName;
+						col++;
+					}
+					for(var i = 0; i < jsonArray.length; i++) {
+						data[i] = {};
+						for(var j = 0; j < cols.length; j++) {
+								data[i][cols[j]] = jsonArray[i][cols[j]];
+						}
+					}
+					YUI({win: results_window, doc: results_window.document, fetchCSS: false}).use('datatable-base', 'widget-base', function (childY) { 
+						var table = new childY.DataTable.Base({
+					        columnset: cols,
+					        recordset: data
+					    });
+						table.render(childY.one('#table_content'));
+				    });
+					
+					var dataElement = Y.one('#data');
+					dataElement.get('childNodes').remove();
+					for(var i = 0; i < jsonArray.length; i++) {
+						var tuple = Y.Node.create('<p>' + JSON.stringify(jsonArray[i]) + '</p>');
+						dataElement.append(tuple);
+					}
+				}
+				else {
+					alert('ERROR');
+				}
+			}
+		}
+	});
+}
+
+YUI().use('node', 'json-parse', 'io-base', 'datatable-base', 'widget-base', function (Y) {
+	Y.on("domready", function () {
+		var viewBtn = Y.one('#viewBtn');
+		var viewBtnFunc = function() { callTableResourceWS(Y); } ;
+		viewBtn.set('onclick', viewBtnFunc);
+	});
+});
+</script>
+</head>
+<body>
+<div id="form">
+Table name: <input type="text" id="tablenameTextField" size="15"></input><br/>
+Limit: <input type="text" id="limitTextField" size="15"></input><br/>
+<input type="button" id="viewBtn" value="View"></input>
+</div>
+<div id="data"></div>
+
+</body>
+</html>

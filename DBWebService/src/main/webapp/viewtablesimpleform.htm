@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>View Table</title>
+<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+<script>
+function callTableResourceWS(Y) {
+	var url = 'webapi/tableresource';
+	var tablenameTextField = Y.one('#tablenameTextField');
+	var tablenameParam = tablenameTextField.get('value');
+	var limitTextField = Y.one('#limitTextField');
+	var limitParam = limitTextField.get('value');
+	Y.io(url, {
+		data: 'tablename=' + tablenameParam + '&limit=' + limitParam,
+		on: {
+			complete: function (id, response) {
+				if (response.status >= 200 && response.status < 300) {
+					var jsonArray = Y.JSON.parse(response.responseText);
+					var dataElement = Y.one('#data');
+					dataElement.get('childNodes').remove();
+					for(var i = 0; i < jsonArray.length; i++) {
+						var tuple = Y.Node.create('<p>' + JSON.stringify(jsonArray[i]) + '</p>');
+						dataElement.append(tuple);
+					}
+				}
+				else {
+					alert('ERROR');
+				}
+			}
+		}
+	});
+}
+
+YUI().use('node', 'json-parse', 'io-base', 'datatable-base', 'widget-base', function (Y) {
+	Y.on("domready", function () {
+		var viewBtn = Y.one('#viewBtn');
+		var viewBtnFunc = function() { callTableResourceWS(Y); } ;
+		viewBtn.set('onclick', viewBtnFunc);
+	});
+});
+</script>
+</head>
+<body>
+<div id="form">
+Table name: <input type="text" id="tablenameTextField" size="15"></input><br/>
+Limit: <input type="text" id="limitTextField" size="15"></input><br/>
+<input type="button" id="viewBtn" value="View"></input>
+</div>
+<div id="data"></div>
+
+</body>
+</html>
