@@ -1,0 +1,5 @@
+
+CONNECT 'jdbc:derby:testbbdb;create=true';
+
+CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE ('APP','CUSTOMER','BB_data/customer/customer_01.dat','|','"',NULL,0);
+

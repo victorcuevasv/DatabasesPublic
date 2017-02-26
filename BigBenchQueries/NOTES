@@ -1,0 +1,8 @@
+Query 11 not working, apparently the left semi join problem was solved but corr is not implemented
+Query 14 was modified for Derby, the JOIN on 1 = 1 was eliminated, and the order by clause was added. Changed joins to agree with the paper specification.
+Query 15 not working (LEFT SEMI JOIN)
+Query 16 changed unix-timestamp calls to casts on DATE, as used by the paper, used timestamp for the arithmetic part plus the Derby function timestampadd
+Query 17 removed apparently superflous JOIN between the main subqueries
+Query 22 the datediff function is not available in Postgres, so the query uses age and EXTRACT epoch instead. IMPORTANT: two FETCH FIRST 100 ROWS ONLY
+constructs are specified, one is possibly an error. IMPORTANT: 'problem column "inv_before" does not exist' in a HAVING clause for the Postgres version,
+Derby version not implemented yet.

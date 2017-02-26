@@ -1,0 +1,25 @@
+
+Create a database named 'bedrock' after login in as user postgres
+
+createdb bedrock
+
+
+Run a sql script
+
+psql -d bedrock -a -f myfile.sql
+
+
+Connect to the database bedrock
+
+psql bedrock
+
+
+Show tables from the psql command line interface 
+
+\dt
+
+Load data into a table from a CSV file
+
+psql -d bigbench -c "COPY customer FROM 'BB_data/customer/customer_01.dat' delimiter '|' csv;"
+
+echo "psql -d bigbench -c \"COPY customer FROM '$(pwd)/BB_data/customer/customer_01.dat' delimiter '|' csv;\""
