@@ -1,0 +1,10 @@
+In order to run the script as the Postgres user it is necessary to modify
+the file pgpass.conf located in C:\Users\bscuser\AppData\Roaming\postgresql
+by adding the line
+
+localhost:5432:bigbench:postgres:postgres
+
+In addition, in order to read the input data files it is necessary to change
+the permissions of the folder that contains them. Right click on the folder
+and select "properties", under security modify the permissions to add the
+permissions to the user "Everyone" and grant access.

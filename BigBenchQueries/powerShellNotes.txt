@@ -1,0 +1,5 @@
+Change the execution policy to run scripts, must be run from a Power Shell
+terminal started to Run As Administrator
+
+set-executionpolicy remotesigned
+
