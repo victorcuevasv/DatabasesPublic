@@ -29,7 +29,7 @@ FROM TEMP_TABLE1 store, TEMP_TABLE2 web, customer c
 WHERE store.customer_sk = web.customer_sk AND web.customer_sk = c_customer_sk AND
       (web.second_year_total / web.first_year_total)  >  (store.second_year_total / store.first_year_total)
 ORDER BY web_sales_increase_ratio DESC, c_customer_sk, c_first_name, c_last_name, c_preferred_cust_flag, c_birth_country, c_login
-LIMIT 100;
+FETCH FIRST 100 ROWS ONLY;
 
 DROP VIEW IF EXISTS TEMP_TABLE1;
 DROP VIEW IF EXISTS TEMP_TABLE2;
